@@ -5375,9 +5375,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "ArticleComponent",
+  data: function data() {
+    return {
+      name: 'Andrew',
+      age: 20,
+      arr: ['Nik', 'Ill']
+    };
+  },
+  methods: {
+    sayHello: function sayHello() {
+      alert('Hello, bro) How are you, dear friend?');
+    }
+  },
   components: {
     SingleArticleComponent: _SingleArticleComponent__WEBPACK_IMPORTED_MODULE_0__["default"]
   }
@@ -28074,7 +28088,17 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_c("SingleArticleComponent")], 1)
+  return _c(
+    "div",
+    [
+      _c("SingleArticleComponent"),
+      _vm._v(" "),
+      _c("h2", [_vm._v("Name: " + _vm._s(_vm.name))]),
+      _vm._v(" "),
+      _c("button", { on: { click: _vm.sayHello } }, [_vm._v("Press button")]),
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
