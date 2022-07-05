@@ -12,7 +12,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="person in personsAgeAreMoreThrityOne">
+                <tr v-for="person in persons">
                     <th scope="row">{{ person.id }}</th>
                     <td>{{ person.name }}</td>
                     <td>{{ person.age }}</td>
@@ -28,53 +28,30 @@
     export default {
         name: "ArticleComponent",
 
+        mounted() {
+            this.getPersons();
+        },
+
         data() {
-            return {
-                persons: [
-                    {
-                        id: 1,
-                        name: 'Andrew',
-                        age: 43,
-                        job: 'Traveler'
-                    },
-                    {
-                        id: 2,
-                        name: 'Nick',
-                        age: 21,
-                        job: 'Java junior'
-                    },
-                    {
-                        id: 3,
-                        name: 'Vladimir',
-                        age: 61,
-                        job: 'Driver'
-                    },
-                    {
-                        id: 4,
-                        name: 'Alexandro',
-                        age: 12,
-                        job: 'Military'
-                    },
-                    {
-                        id: 5,
-                        name: 'Peter',
-                        age: 33,
-                        job: 'Engineer'
-                    }
-                ]
+            return{
+                persons: null
             }
         },
 
         methods: {
             sayHello() {
                 alert('Hello, bro) How are you, dear friend?');
+            },
+
+            getPersons() {
+                axios.get('/persons')
+                .then(data => {
+                    this.persons = data.data;
+                })
             }
         },
 
         computed: {
-            smbJob() {
-                return 'Работает родственником чиновника';
-            },
             personsAgeAreMoreThrityOne() {
                 return this.persons.filter(function(person) {
                     return person.age > 31;

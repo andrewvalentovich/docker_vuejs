@@ -5397,45 +5397,27 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "ArticleComponent",
+  mounted: function mounted() {
+    this.getPersons();
+  },
   data: function data() {
     return {
-      persons: [{
-        id: 1,
-        name: 'Andrew',
-        age: 43,
-        job: 'Traveler'
-      }, {
-        id: 2,
-        name: 'Nick',
-        age: 21,
-        job: 'Java junior'
-      }, {
-        id: 3,
-        name: 'Vladimir',
-        age: 61,
-        job: 'Driver'
-      }, {
-        id: 4,
-        name: 'Alexandro',
-        age: 12,
-        job: 'Military'
-      }, {
-        id: 5,
-        name: 'Peter',
-        age: 33,
-        job: 'Engineer'
-      }]
+      persons: null
     };
   },
   methods: {
     sayHello: function sayHello() {
       alert('Hello, bro) How are you, dear friend?');
+    },
+    getPersons: function getPersons() {
+      var _this = this;
+
+      axios.get('/persons').then(function (data) {
+        _this.persons = data.data;
+      });
     }
   },
   computed: {
-    smbJob: function smbJob() {
-      return 'Работает родственником чиновника';
-    },
     personsAgeAreMoreThrityOne: function personsAgeAreMoreThrityOne() {
       return this.persons.filter(function (person) {
         return person.age > 31;
@@ -28150,7 +28132,7 @@ var render = function () {
         _vm._v(" "),
         _c(
           "tbody",
-          _vm._l(_vm.personsAgeAreMoreThrityOne, function (person) {
+          _vm._l(_vm.persons, function (person) {
             return _c("tr", [
               _c("th", { attrs: { scope: "row" } }, [
                 _vm._v(_vm._s(person.id)),
