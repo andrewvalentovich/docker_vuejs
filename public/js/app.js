@@ -5400,17 +5400,30 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       persons: [{
+        id: 1,
         name: 'Andrew',
-        age: 20,
-        job: 'сын депутата'
+        age: 43,
+        job: 'Traveler'
       }, {
+        id: 2,
         name: 'Nick',
-        age: 20,
+        age: 21,
         job: 'Java junior'
       }, {
+        id: 3,
         name: 'Vladimir',
-        age: 20,
-        job: 'Monomach'
+        age: 61,
+        job: 'Driver'
+      }, {
+        id: 4,
+        name: 'Alexandro',
+        age: 12,
+        job: 'Military'
+      }, {
+        id: 5,
+        name: 'Peter',
+        age: 33,
+        job: 'Engineer'
       }]
     };
   },
@@ -5422,6 +5435,11 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     smbJob: function smbJob() {
       return 'Работает родственником чиновника';
+    },
+    personsAgeAreMoreThrityOne: function personsAgeAreMoreThrityOne() {
+      return this.persons.filter(function (person) {
+        return person.age > 31;
+      });
     }
   },
   components: {
@@ -28127,22 +28145,22 @@ var render = function () {
       _vm._v(" "),
       _c("button", { on: { click: _vm.sayHello } }, [_vm._v("Press button")]),
       _vm._v(" "),
-      _c("table", { staticClass: "table" }, [
+      _c("table", { staticClass: "table table table-striped" }, [
         _vm._m(0),
         _vm._v(" "),
         _c(
           "tbody",
-          _vm._l(_vm.persons, function (person) {
+          _vm._l(_vm.personsAgeAreMoreThrityOne, function (person) {
             return _c("tr", [
               _c("th", { attrs: { scope: "row" } }, [
                 _vm._v(_vm._s(person.id)),
               ]),
               _vm._v(" "),
-              _c("th", [_vm._v(_vm._s(person.name))]),
+              _c("td", [_vm._v(_vm._s(person.name))]),
               _vm._v(" "),
-              _c("th", [_vm._v(_vm._s(person.age))]),
+              _c("td", [_vm._v(_vm._s(person.age))]),
               _vm._v(" "),
-              _c("th", [_vm._v(_vm._s(person.job))]),
+              _c("td", [_vm._v(_vm._s(person.job))]),
             ])
           }),
           0
@@ -28161,11 +28179,11 @@ var staticRenderFns = [
       _c("tr", [
         _c("th", { attrs: { scope: "col" } }, [_vm._v("#")]),
         _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("First")]),
+        _c("td", { attrs: { scope: "col" } }, [_vm._v("First")]),
         _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Age")]),
+        _c("td", { attrs: { scope: "col" } }, [_vm._v("Age")]),
         _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Job")]),
+        _c("td", { attrs: { scope: "col" } }, [_vm._v("Job")]),
       ]),
     ])
   },
