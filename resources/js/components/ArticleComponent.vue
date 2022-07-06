@@ -1,5 +1,6 @@
 <template>
     <div>
+        <CreatePersonComponent></CreatePersonComponent>
         <SingleArticleComponent></SingleArticleComponent>
         <button @click="sayHello">Press button</button>
         <table class="table table table-striped">
@@ -25,12 +26,9 @@
 
 <script>
     import SingleArticleComponent from "./SingleArticleComponent";
+    import CreatePersonComponent from "./CreatePersonComponent";
     export default {
         name: "ArticleComponent",
-
-        mounted() {
-            this.getPersons();
-        },
 
         data() {
             return{
@@ -41,27 +39,16 @@
         methods: {
             sayHello() {
                 alert('Hello, bro) How are you, dear friend?');
-            },
-
-            getPersons() {
-                axios.get('/persons')
-                .then(data => {
-                    this.persons = data.data;
-                })
             }
         },
 
         computed: {
-            personsAgeAreMoreThrityOne() {
-                return this.persons.filter(function(person) {
-                    return person.age > 31;
-                })
-            }
 
         },
 
         components: {
-            SingleArticleComponent
+            SingleArticleComponent,
+            CreatePersonComponent
         }
     }
 </script>

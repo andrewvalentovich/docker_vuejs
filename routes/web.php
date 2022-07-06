@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\PersonsController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
@@ -24,4 +23,3 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [HomeController::class, 'home']);
-Route::get('/persons', [PersonsController::class, '__invoke']);
