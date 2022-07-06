@@ -48,8 +48,8 @@
                     age: this.age,
                     job: this.job
                 })
-                .then($result => {
-                    console.log($result);
+                .then(result => {
+                    console.log(result);
                 })
             }
         }
