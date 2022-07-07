@@ -52,7 +52,7 @@
             return {
                 people: null,
                 editPersonId: null,
-                name: null,
+                name: 'Andrew',
                 age: null,
                 job: null
             }
@@ -60,6 +60,8 @@
 
         mounted() {
             this.getPersons();
+            this.$parent.parentLog();
+            console.log(this.$parent.$refs.getPersonComponent.name);
         },
 
         methods: {
@@ -124,6 +126,10 @@
 
             closeBlock() {
                 this.editPersonId = null;
+            },
+
+            getLog() {
+                console.log('this is getPersonComponent');
             }
 
         }

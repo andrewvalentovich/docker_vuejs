@@ -1,7 +1,7 @@
 <template>
     <div>
         <CreatePersonComponent></CreatePersonComponent>
-        <GetPersonComponent></GetPersonComponent>
+        <GetPersonComponent ref="getPersonComponent"></GetPersonComponent>
         <button @click="sayHello">Press button</button>
     </div>
 </template>
@@ -19,9 +19,16 @@
             }
         },
 
+        mounted() {
+            console.log(this.$refs.getPersonComponent.name);
+        },
+
         methods: {
             sayHello() {
                 alert('Hello, bro) How are you, dear friend?');
+            },
+            parentLog() {
+                console.log('ArticleComponent');
             }
         },
 

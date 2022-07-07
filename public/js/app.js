@@ -5389,9 +5389,15 @@ __webpack_require__.r(__webpack_exports__);
       persons: null
     };
   },
+  mounted: function mounted() {
+    console.log(this.$refs.getPersonComponent.name);
+  },
   methods: {
     sayHello: function sayHello() {
       alert('Hello, bro) How are you, dear friend?');
+    },
+    parentLog: function parentLog() {
+      console.log('ArticleComponent');
     }
   },
   computed: {},
@@ -5533,13 +5539,15 @@ __webpack_require__.r(__webpack_exports__);
     return {
       people: null,
       editPersonId: null,
-      name: null,
+      name: 'Andrew',
       age: null,
       job: null
     };
   },
   mounted: function mounted() {
     this.getPersons();
+    this.$parent.parentLog();
+    console.log(this.$parent.$refs.getPersonComponent.name);
   },
   methods: {
     getPersons: function getPersons() {
@@ -5593,6 +5601,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     closeBlock: function closeBlock() {
       this.editPersonId = null;
+    },
+    getLog: function getLog() {
+      console.log('this is getPersonComponent');
     }
   }
 });
@@ -28861,7 +28872,7 @@ var render = function () {
     [
       _c("CreatePersonComponent"),
       _vm._v(" "),
-      _c("GetPersonComponent"),
+      _c("GetPersonComponent", { ref: "getPersonComponent" }),
       _vm._v(" "),
       _c("button", { on: { click: _vm.sayHello } }, [_vm._v("Press button")]),
     ],
