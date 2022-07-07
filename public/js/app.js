@@ -5520,6 +5520,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'GetPersonComponent',
   data: function data() {
@@ -5542,8 +5549,15 @@ __webpack_require__.r(__webpack_exports__);
         _this.people = result.data;
       });
     },
-    updatePerson: function updatePerson(id) {
+    deletePerson: function deletePerson(id) {
       var _this2 = this;
+
+      axios["delete"]("/api/people/".concat(id)).then(function (result) {
+        _this2.getPersons();
+      });
+    },
+    updatePerson: function updatePerson(id) {
+      var _this3 = this;
 
       this.editPersonId = null;
       axios.patch("/api/people/".concat(id), {
@@ -5551,7 +5565,7 @@ __webpack_require__.r(__webpack_exports__);
         age: this.age,
         job: this.job
       }).then(function (result) {
-        _this2.getPersons();
+        _this3.getPersons();
       });
     },
     changeEditPersonId: function changeEditPersonId(id, name, age, job) {
@@ -29080,6 +29094,23 @@ var render = function () {
                     [_vm._v("Edit")]
                   ),
                 ]),
+                _vm._v(" "),
+                _c("td", [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "btn btn-danger",
+                      attrs: { href: "#" },
+                      on: {
+                        click: function ($event) {
+                          $event.preventDefault()
+                          return _vm.deletePerson(person.id)
+                        },
+                      },
+                    },
+                    [_vm._v("Delete")]
+                  ),
+                ]),
               ]),
               _vm._v(" "),
               _c("tr", { class: _vm.updateBlockVision(person.id) }, [
@@ -29182,7 +29213,7 @@ var render = function () {
                   _c(
                     "a",
                     {
-                      staticClass: "btn btn-danger",
+                      staticClass: "btn btn-warning",
                       attrs: { href: "#" },
                       on: {
                         click: function ($event) {
@@ -29192,6 +29223,23 @@ var render = function () {
                       },
                     },
                     [_vm._v("Close")]
+                  ),
+                ]),
+                _vm._v(" "),
+                _c("td", [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "btn btn-danger",
+                      attrs: { href: "#" },
+                      on: {
+                        click: function ($event) {
+                          $event.preventDefault()
+                          return _vm.deletePerson(person.id)
+                        },
+                      },
+                    },
+                    [_vm._v("Delete")]
                   ),
                 ]),
               ]),
@@ -29219,6 +29267,8 @@ var staticRenderFns = [
         _c("td", { attrs: { scope: "col" } }, [_vm._v("Job")]),
         _vm._v(" "),
         _c("td", { attrs: { scope: "col" } }, [_vm._v("Edit")]),
+        _vm._v(" "),
+        _c("td", { attrs: { scope: "col" } }, [_vm._v("Delete")]),
       ]),
     ])
   },

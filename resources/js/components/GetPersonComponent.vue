@@ -8,6 +8,7 @@
                 <td scope="col">Age</td>
                 <td scope="col">Job</td>
                 <td scope="col">Edit</td>
+                <td scope="col">Delete</td>
             </tr>
             </thead>
             <tbody>
@@ -20,6 +21,9 @@
                         <td>
                             <a href="#" @click.prevent="changeEditPersonId(person.id, person.name, person.age, person.job)" class="btn btn-primary">Edit</a>
                         </td>
+                        <td>
+                            <a href="#" @click.prevent="deletePerson(person.id)" class="btn btn-danger">Delete</a>
+                        </td>
                     </tr>
                     <tr :class="updateBlockVision(person.id)">
                         <th><input class="form-control" :value="person.id" type="text"></th>
@@ -28,7 +32,10 @@
                         <td><input class="form-control" v-model="job" type="text"></td>
                         <td>
                             <a href="#" @click.prevent="updatePerson(person.id)" class="btn btn-success">Update</a>
-                            <a href="#" @click.prevent="closeBlock" class="btn btn-danger">Close</a>
+                            <a href="#" @click.prevent="closeBlock" class="btn btn-warning">Close</a>
+                        </td>
+                        <td>
+                            <a href="#" @click.prevent="deletePerson(person.id)" class="btn btn-danger">Delete</a>
                         </td>
                     </tr>
                 </template>
@@ -61,6 +68,13 @@
                 .then(result => {
                     this.people = result.data;
                 })
+            },
+
+            deletePerson(id) {
+                axios.delete(`/api/people/${id}`)
+                    .then(result => {
+                        this.getPersons()
+                    })
             },
 
             updatePerson(id) {

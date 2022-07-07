@@ -23,4 +23,5 @@ Route::group(['namespace' => 'Person', 'prefix' => 'people'], function() {
     Route::post('/', ['App\Http\Controllers\Person\StoreController', '__invoke']);
     Route::get('/', ['App\Http\Controllers\Person\GetController', '__invoke']);
     Route::patch('/{person}', ['App\Http\Controllers\Person\UpdateController', '__invoke']);
+    Route::delete('/{person}', ['App\Http\Controllers\Person\DeleteController', '__invoke']);
 });
