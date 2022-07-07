@@ -1,21 +1,37 @@
 <template>
     <div>
-        <table class="table table table-striped">
+        <table class="table">
             <thead>
             <tr>
                 <th scope="col">#</th>
                 <td scope="col">Name</td>
                 <td scope="col">Age</td>
                 <td scope="col">Job</td>
+                <td scope="col">Edit</td>
             </tr>
             </thead>
             <tbody>
-            <tr v-for="person in people">
-                <th scope="row">{{ person.id }}</th>
-                <td>{{ person.name }}</td>
-                <td>{{ person.age }}</td>
-                <td>{{ person.job }}</td>
-            </tr>
+                <template v-for="person in people">
+                    <tr :class="editBlockVision(person.id)">
+                        <th>{{ person.id }}</th>
+                        <td>{{ person.name }}</td>
+                        <td>{{ person.age }}</td>
+                        <td>{{ person.job }}</td>
+                        <td>
+                            <a href="#" @click.prevent="changeEditPersonId(person.id, person.name, person.age, person.job)" class="btn btn-primary">Edit</a>
+                        </td>
+                    </tr>
+                    <tr :class="updateBlockVision(person.id)">
+                        <th><input class="form-control" :value="person.id" type="text"></th>
+                        <td><input class="form-control"  v-model="name" type="text"></td>
+                        <td><input class="form-control" v-model="age" type="text"></td>
+                        <td><input class="form-control" v-model="job" type="text"></td>
+                        <td>
+                            <a href="#" @click.prevent="updatePerson(person.id)" class="btn btn-success">Update</a>
+                            <a href="#" @click.prevent="closeBlock" class="btn btn-danger">Close</a>
+                        </td>
+                    </tr>
+                </template>
             </tbody>
         </table>
     </div>
@@ -27,7 +43,11 @@
 
         data() {
             return {
-                people: null
+                people: null,
+                editPersonId: null,
+                name: null,
+                age: null,
+                job: null
             }
         },
 
@@ -38,14 +58,66 @@
         methods: {
             getPersons() {
                 axios.get('/api/people/')
-                    .then(result => {
-                        this.people = result.data;
-                    })
+                .then(result => {
+                    this.people = result.data;
+                })
+            },
+
+            updatePerson(id) {
+                this.editPersonId = null;
+                axios.patch(`/api/people/${id}`,
+                {
+                    name: this.name,
+                    age: this.age,
+                    job: this.job
+                })
+                .then(result => {
+                    this.getPersons()
+                })
+            },
+
+            changeEditPersonId(
+                id,
+                name,
+                age,
+                job
+            ) {
+                this.editPersonId = id;
+                this.name = name;
+                this.age = age;
+                this.job = job;
+            },
+
+            isEdit(id) {
+                return this.editPersonId === id;
+            },
+
+            updateBlockVision(id) {
+                if(this.isEdit(id)) {
+                    return '';
+                } else {
+                    return 'd-none';
+                }
+            },
+
+            editBlockVision(id) {
+                if(!this.isEdit(id)) {
+                    return '';
+                } else {
+                    return 'd-none';
+                }
+            },
+
+            closeBlock() {
+                this.editPersonId = null;
             }
+
         }
     }
 </script>
 
 <style scoped>
-
+    .form-control-plaintext{
+        outline: none!important;
+    }
 </style>
