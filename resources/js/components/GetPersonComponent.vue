@@ -13,18 +13,7 @@
             </thead>
             <tbody>
                 <template v-for="person in people">
-                    <tr :class="editBlockVision(person.id)">
-                        <th>{{ person.id }}</th>
-                        <td>{{ person.name }}</td>
-                        <td>{{ person.age }}</td>
-                        <td>{{ person.job }}</td>
-                        <td>
-                            <a href="#" @click.prevent="changeEditPersonId(person.id, person.name, person.age, person.job)" class="btn btn-primary">Edit</a>
-                        </td>
-                        <td>
-                            <a href="#" @click.prevent="deletePerson(person.id)" class="btn btn-danger">Delete</a>
-                        </td>
-                    </tr>
+                    <ShowComponent :person="person" :ref="`show_${person.id}`"></ShowComponent>
                     <EditComponent :person="person" :ref="`edit_${person.id}`"></EditComponent>
                 </template>
             </tbody>
@@ -33,6 +22,7 @@
 </template>
 
 <script>
+    import ShowComponent from "./GetPerson/ShowComponent";
     import EditComponent from "./GetPerson/EditComponent";
     export default {
         name: 'GetPersonComponent',
@@ -88,18 +78,23 @@
                 job
             ) {
                 this.editPersonId = id;
+                let editName = this.getEditName(id);
+                console.log('='+editName);
+                editName.name = name;
+                editName.age = age;
+                editName.job = job;
+            },
+
+            getEditName(id) {
                 let editName = `edit_${id}`;
-                let fullEditName = this.$refs[editName][0];
-                fullEditName.name = name;
-                fullEditName.age = age;
-                fullEditName.job = job;
+                return this.$refs[editName][0];
             },
 
             isEdit(id) {
                 return this.editPersonId === id;
             },
 
-            updateBlockVision(id) {
+            editComponentVision(id) {
                 if(this.isEdit(id)) {
                     return '';
                 } else {
@@ -107,7 +102,7 @@
                 }
             },
 
-            editBlockVision(id) {
+            showComponentVision(id) {
                 if(!this.isEdit(id)) {
                     return '';
                 } else {
@@ -126,6 +121,7 @@
         },
 
         components: {
+            ShowComponent,
             EditComponent
         }
     }

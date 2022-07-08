@@ -1,5 +1,5 @@
 <template>
-    <tr :class="this.$parent.updateBlockVision(person.id)">
+    <tr :class="this.$parent.editComponentVision(person.id)">
         <th><input class="form-control" :value="person.id" type="text"></th>
         <td><input class="form-control"  v-model="name" type="text"></td>
         <td><input class="form-control" v-model="age" type="text"></td>
@@ -68,7 +68,5 @@
 </script>
 
 <style scoped>
-    .form-control-plaintext{
-        outline: none!important;
-    }
+
 </style>
