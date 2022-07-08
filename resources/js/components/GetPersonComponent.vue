@@ -25,19 +25,7 @@
                             <a href="#" @click.prevent="deletePerson(person.id)" class="btn btn-danger">Delete</a>
                         </td>
                     </tr>
-                    <tr :class="updateBlockVision(person.id)">
-                        <th><input class="form-control" :value="person.id" type="text"></th>
-                        <td><input class="form-control"  v-model="name" type="text"></td>
-                        <td><input class="form-control" v-model="age" type="text"></td>
-                        <td><input class="form-control" v-model="job" type="text"></td>
-                        <td>
-                            <a href="#" @click.prevent="updatePerson(person.id)" class="btn btn-success">Update</a>
-                            <a href="#" @click.prevent="closeBlock" class="btn btn-warning">Close</a>
-                        </td>
-                        <td>
-                            <a href="#" @click.prevent="deletePerson(person.id)" class="btn btn-danger">Delete</a>
-                        </td>
-                    </tr>
+                    <EditComponent :person="person" :ref="`edit_${person.id}`"></EditComponent>
                 </template>
             </tbody>
         </table>
@@ -45,6 +33,7 @@
 </template>
 
 <script>
+    import EditComponent from "./GetPerson/EditComponent";
     export default {
         name: 'GetPersonComponent',
 
@@ -61,7 +50,7 @@
         mounted() {
             this.getPersons();
             this.$parent.parentLog();
-            console.log(this.$parent.$refs.getPersonComponent.name);
+            console.log(this.$parent.$refs.get.name);
         },
 
         methods: {
@@ -99,9 +88,11 @@
                 job
             ) {
                 this.editPersonId = id;
-                this.name = name;
-                this.age = age;
-                this.job = job;
+                let editName = `edit_${id}`;
+                let fullEditName = this.$refs[editName][0];
+                fullEditName.name = name;
+                fullEditName.age = age;
+                fullEditName.job = job;
             },
 
             isEdit(id) {
@@ -132,6 +123,10 @@
                 console.log('this is getPersonComponent');
             }
 
+        },
+
+        components: {
+            EditComponent
         }
     }
 </script>

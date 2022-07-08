@@ -46,10 +46,13 @@
                 axios.post('/api/people/', {
                     name: this.name,
                     age: this.age,
-                    job: this.job
+                    job: this.job,
                 })
                 .then(result => {
-                    console.log(result);
+                    this.name = null
+                    this.age = null
+                    this.job = null
+                    this.$parent.$refs.get.getPersons()
                 })
             }
         }

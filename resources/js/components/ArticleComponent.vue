@@ -1,7 +1,7 @@
 <template>
     <div>
         <CreatePersonComponent></CreatePersonComponent>
-        <GetPersonComponent ref="getPersonComponent"></GetPersonComponent>
+        <GetPersonComponent ref="get"></GetPersonComponent>
         <button @click="sayHello">Press button</button>
     </div>
 </template>
@@ -20,7 +20,7 @@
         },
 
         mounted() {
-            console.log(this.$refs.getPersonComponent.name);
+            console.log(this.$refs.get.name);
         },
 
         methods: {
