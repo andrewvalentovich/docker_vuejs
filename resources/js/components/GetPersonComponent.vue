@@ -13,8 +13,8 @@
             </thead>
             <tbody>
                 <template v-for="person in people">
-                    <ShowComponent :person="person" :ref="`show_${person.id}`"></ShowComponent>
-                    <EditComponent :person="person" :ref="`edit_${person.id}`"></EditComponent>
+                    <Show :person="person" :ref="`show_${person.id}`"></Show>
+                    <Edit :person="person" :ref="`edit_${person.id}`"></Edit>
                 </template>
             </tbody>
         </table>
@@ -22,8 +22,8 @@
 </template>
 
 <script>
-    import ShowComponent from "./GetPerson/ShowComponent";
-    import EditComponent from "./GetPerson/EditComponent";
+    import Show from "./Person/Show";
+    import Edit from "./Person/Edit";
     export default {
         name: 'GetPersonComponent',
 
@@ -121,8 +121,8 @@
         },
 
         components: {
-            ShowComponent,
-            EditComponent
+            Show,
+            Edit
         }
     }
 </script>

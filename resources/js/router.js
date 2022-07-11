@@ -16,6 +16,10 @@ export default new VueRouter({
         {
             path: '/tag',
             component: TagComponent
+        },
+        {
+            path: '/people', component: () => import('./components/Person/Index'),
+            name: 'person.index'
         }
     ]
 });
