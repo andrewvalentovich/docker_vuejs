@@ -5614,9 +5614,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     close: function close() {
-      _router__WEBPACK_IMPORTED_MODULE_0__["default"].push({
-        name: 'person.index'
-      });
+      _router__WEBPACK_IMPORTED_MODULE_0__["default"].go(-1);
     }
   }
 });
@@ -5634,6 +5632,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../router */ "./resources/js/router.js");
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'Show',
   data: function data() {
@@ -5650,6 +5650,13 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.get('/api/people/' + this.$route.params.id).then(function (result) {
         _this.person = result.data;
+      });
+    },
+    deletePerson: function deletePerson() {
+      axios["delete"]('/api/people/' + this.$route.params.id).then(function (result) {
+        _router__WEBPACK_IMPORTED_MODULE_0__["default"].push({
+          name: 'person.index'
+        });
       });
     }
   }
@@ -6149,7 +6156,10 @@ var render = function render() {
   var _vm = this,
       _c = _vm._self._c;
 
-  return _vm.person ? _c("div", [_c("div", [_vm._v("\n        Name: " + _vm._s(this.person.name) + "\n    ")]), _vm._v(" "), _c("div", [_vm._v("\n        Age: " + _vm._s(this.person.age) + "\n    ")]), _vm._v(" "), _c("div", [_vm._v("\n        Job: " + _vm._s(this.person.job) + "\n    ")]), _vm._v(" "), _c("div", [_c("router-link", {
+  return this.person !== null ? _c("div", {
+    staticClass: "mt-3"
+  }, [_c("div", [_vm._v("\n        Name: " + _vm._s(this.person.name) + "\n    ")]), _vm._v(" "), _c("div", [_vm._v("\n        Age: " + _vm._s(this.person.age) + "\n    ")]), _vm._v(" "), _c("div", [_vm._v("\n        Job: " + _vm._s(this.person.job) + "\n    ")]), _vm._v(" "), _c("div", [_c("router-link", {
+    staticClass: "text-decoration-none",
     attrs: {
       to: {
         name: "person.edit",
@@ -6158,7 +6168,18 @@ var render = function render() {
         }
       }
     }
-  }, [_vm._v("\n            Edit\n        ")])], 1)]) : _vm._e();
+  }, [_vm._v("\n            Edit\n        ")]), _vm._v(" "), _c("a", {
+    staticClass: "text-danger text-decoration-none",
+    attrs: {
+      href: "#"
+    },
+    on: {
+      click: function click($event) {
+        $event.preventDefault();
+        return _vm.deletePerson.apply(null, arguments);
+      }
+    }
+  }, [_vm._v("Delete")])], 1)]) : _vm._e();
 };
 
 var staticRenderFns = [];

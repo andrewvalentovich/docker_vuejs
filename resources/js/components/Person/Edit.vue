@@ -62,7 +62,7 @@
                 })
             },
             close() {
-                router.push({ name: 'person.index' });
+                router.go(-1);
             }
         }
     }

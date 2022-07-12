@@ -1,5 +1,5 @@
 <template>
-    <div v-if="person">
+    <div class="mt-3" v-if="this.person !== null">
         <div>
             Name: {{ this.person.name }}
         </div>
@@ -10,14 +10,17 @@
             Job: {{ this.person.job }}
         </div>
         <div>
-            <router-link :to="{name: 'person.edit', params: { id: this.person.id }}">
+            <router-link class="text-decoration-none" :to="{name: 'person.edit', params: { id: this.person.id }}">
                 Edit
             </router-link>
+            <a @click.prevent="deletePerson" class="text-danger text-decoration-none" href="#">Delete</a>
         </div>
     </div>
 </template>
 
 <script>
+    import router from "../../router";
+
     export default {
         name: 'Show',
 
@@ -36,6 +39,12 @@
                 axios.get('/api/people/' + this.$route.params.id)
                 .then(result => {
                     this.person = result.data;
+                })
+            },
+            deletePerson() {
+                axios.delete('/api/people/' + this.$route.params.id)
+                .then(result => {
+                    router.push({ name: 'person.index' });
                 })
             }
         }
