@@ -35,6 +35,11 @@ __webpack_require__.r(__webpack_exports__);
         // за счёт чего мы не можем обратиться к data()
         // (this.name, this.age и т.д.)
       });
+    },
+    close: function close() {
+      _router__WEBPACK_IMPORTED_MODULE_0__["default"].push({
+        name: 'person.index'
+      });
     }
   }
 });
@@ -157,7 +162,18 @@ var render = function render() {
         return _vm.create.apply(null, arguments);
       }
     }
-  }, [_vm._v("Add person")])])])]);
+  }, [_vm._v("Add person")]), _vm._v(" "), _c("button", {
+    staticClass: "btn btn-danger mb-3",
+    attrs: {
+      type: "submit"
+    },
+    on: {
+      click: function click($event) {
+        $event.preventDefault();
+        return _vm.close.apply(null, arguments);
+      }
+    }
+  }, [_vm._v("Close")])])])]);
 };
 
 var staticRenderFns = [];

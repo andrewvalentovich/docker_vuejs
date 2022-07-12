@@ -5573,54 +5573,52 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: 'EditComponent' // data() {
-  //     return {
-  //         name: null,
-  //         age: null,
-  //         job: null
-  //     }
-  // },
-  //
-  // props: [
-  //     'person'
-  // ],
-  //
-  // mounted() {
-  //
-  // },
-  //
-  // methods: {
-  //     deletePerson(id) {
-  //         axios.delete(`/api/people/${id}`)
-  //             .then(result => {
-  //                 this.$parent.getPersons()
-  //             })
-  //     },
-  //
-  //     updatePerson(id) {
-  //         this.$parent.editPersonId = null;
-  //         axios.patch(`/api/people/${id}`,
-  //             {
-  //                 name: this.name,
-  //                 age: this.age,
-  //                 job: this.job
-  //             })
-  //             .then(result => {
-  //                 this.$parent.getPersons()
-  //             })
-  //     },
-  //
-  //     closeBlock() {
-  //         this.$parent.closeBlock();
-  //     },
-  //
-  //     getLog() {
-  //         console.log('this is getPersonComponent');
-  //     }
-  //
-  // }
+/* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../router */ "./resources/js/router.js");
 
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: 'Edit',
+  data: function data() {
+    return {
+      name: null,
+      age: null,
+      job: null
+    };
+  },
+  mounted: function mounted() {
+    this.getPerson();
+  },
+  methods: {
+    getPerson: function getPerson() {
+      var _this = this;
+
+      axios.get('/api/people/' + this.$route.params.id).then(function (result) {
+        _this.name = result.data.name;
+        _this.age = result.data.age;
+        _this.job = result.data.job;
+      });
+    },
+    update: function update() {
+      var _this2 = this;
+
+      axios.patch('/api/people/' + this.$route.params.id, {
+        name: this.name,
+        age: this.age,
+        job: this.job
+      }).then(function (result) {
+        _router__WEBPACK_IMPORTED_MODULE_0__["default"].push({
+          name: 'person.show',
+          params: {
+            id: _this2.$route.params.id
+          }
+        });
+      });
+    },
+    close: function close() {
+      _router__WEBPACK_IMPORTED_MODULE_0__["default"].push({
+        name: 'person.index'
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -5637,47 +5635,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: 'ShowComponent' // data() {
-  //     return {
-  //
-  //     }
-  // },
-  //
-  // props: [
-  //     'person'
-  // ],
-  //
-  // mounted() {
-  //
-  // },
-  //
-  // methods: {
-  //     deletePerson(id) {
-  //         axios.delete(`/api/people/${id}`)
-  //             .then(result => {
-  //                 this.$parent.getPersons()
-  //             })
-  //     },
-  //
-  //     changeEditPersonId(
-  //         id,
-  //         name,
-  //         age,
-  //         job
-  //     ) {
-  //         this.$parent.editPersonId = id;
-  //         let editName = this.getEditName(id);
-  //         editName.name = name;
-  //         editName.age = age;
-  //         editName.job = job;
-  //     },
-  //
-  //     getEditName(id) {
-  //         let editName = `edit_${id}`;
-  //         return this.$parent.$refs[editName][0];
-  //     },
-  // }
+  name: 'Show',
+  data: function data() {
+    return {
+      person: null
+    };
+  },
+  mounted: function mounted() {
+    this.getPerson();
+  },
+  methods: {
+    getPerson: function getPerson() {
+      var _this = this;
 
+      axios.get('/api/people/' + this.$route.params.id).then(function (result) {
+        _this.person = result.data;
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -6037,7 +6012,119 @@ var render = function render() {
   var _vm = this,
       _c = _vm._self._c;
 
-  return _c("div", [_vm._v("\n        Edit\n    ")]);
+  return _c("div", {
+    staticClass: "w-25 mt-4"
+  }, [_c("form", {
+    staticClass: "form"
+  }, [_c("div", {
+    staticClass: "form-floating mb-3"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.name,
+      expression: "name"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text",
+      id: "nameInput",
+      placeholder: "Ivan"
+    },
+    domProps: {
+      value: _vm.name
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.name = $event.target.value;
+      }
+    }
+  }), _vm._v(" "), _c("label", {
+    attrs: {
+      "for": "nameInput"
+    }
+  }, [_vm._v("First name")])]), _vm._v(" "), _c("div", {
+    staticClass: "form-floating mb-3"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.age,
+      expression: "age"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "number",
+      id: "ageInput",
+      placeholder: "22"
+    },
+    domProps: {
+      value: _vm.age
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.age = $event.target.value;
+      }
+    }
+  }), _vm._v(" "), _c("label", {
+    attrs: {
+      "for": "ageInput"
+    }
+  }, [_vm._v("Age")])]), _vm._v(" "), _c("div", {
+    staticClass: "form-floating mb-3"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.job,
+      expression: "job"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text",
+      id: "jobInput",
+      placeholder: "PHP programmer"
+    },
+    domProps: {
+      value: _vm.job
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.job = $event.target.value;
+      }
+    }
+  }), _vm._v(" "), _c("label", {
+    attrs: {
+      "for": "jobInput"
+    }
+  }, [_vm._v("Job")])]), _vm._v(" "), _c("div", {
+    staticClass: "mb-3"
+  }, [_c("button", {
+    staticClass: "btn btn-primary mb-3",
+    attrs: {
+      type: "submit"
+    },
+    on: {
+      click: function click($event) {
+        $event.preventDefault();
+        return _vm.update.apply(null, arguments);
+      }
+    }
+  }, [_vm._v("Update information")]), _vm._v(" "), _c("button", {
+    staticClass: "btn btn-danger mb-3",
+    attrs: {
+      type: "submit"
+    },
+    on: {
+      click: function click($event) {
+        $event.preventDefault();
+        return _vm.close.apply(null, arguments);
+      }
+    }
+  }, [_vm._v("Close")])])])]);
 };
 
 var staticRenderFns = [];
@@ -6062,7 +6149,16 @@ var render = function render() {
   var _vm = this,
       _c = _vm._self._c;
 
-  return _c("div", [_vm._v("\n        Show\n    ")]);
+  return _vm.person ? _c("div", [_c("div", [_vm._v("\n        Name: " + _vm._s(this.person.name) + "\n    ")]), _vm._v(" "), _c("div", [_vm._v("\n        Age: " + _vm._s(this.person.age) + "\n    ")]), _vm._v(" "), _c("div", [_vm._v("\n        Job: " + _vm._s(this.person.job) + "\n    ")]), _vm._v(" "), _c("div", [_c("router-link", {
+    attrs: {
+      to: {
+        name: "person.edit",
+        params: {
+          id: this.person.id
+        }
+      }
+    }
+  }, [_vm._v("\n            Edit\n        ")])], 1)]) : _vm._e();
 };
 
 var staticRenderFns = [];
@@ -6241,7 +6337,7 @@ vue__WEBPACK_IMPORTED_MODULE_2__["default"].use(vue_router__WEBPACK_IMPORTED_MOD
     path: '/tag',
     component: _components_Routes_TagComponent__WEBPACK_IMPORTED_MODULE_1__["default"]
   }, {
-    path: '/people',
+    path: '/people/',
     component: function component() {
       return __webpack_require__.e(/*! import() */ "resources_js_components_Person_Index_vue").then(__webpack_require__.bind(__webpack_require__, /*! ./components/Person/Index */ "./resources/js/components/Person/Index.vue"));
     },
@@ -6252,6 +6348,20 @@ vue__WEBPACK_IMPORTED_MODULE_2__["default"].use(vue_router__WEBPACK_IMPORTED_MOD
       return __webpack_require__.e(/*! import() */ "resources_js_components_Person_Create_vue").then(__webpack_require__.bind(__webpack_require__, /*! ./components/Person/Create */ "./resources/js/components/Person/Create.vue"));
     },
     name: 'person.create'
+  }, {
+    path: '/people/:id/edit',
+    component: function component() {
+      return Promise.resolve(/*! import() */).then(__webpack_require__.bind(__webpack_require__, /*! ./components/Person/Edit */ "./resources/js/components/Person/Edit.vue"));
+    },
+    // переменные записываются через :
+    name: 'person.edit'
+  }, {
+    path: '/people/:id',
+    component: function component() {
+      return Promise.resolve(/*! import() */).then(__webpack_require__.bind(__webpack_require__, /*! ./components/Person/Show */ "./resources/js/components/Person/Show.vue"));
+    },
+    // переменные записываются через :
+    name: 'person.show'
   }]
 }));
 

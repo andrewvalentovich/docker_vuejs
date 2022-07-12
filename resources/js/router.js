@@ -18,12 +18,20 @@ export default new VueRouter({
             component: TagComponent
         },
         {
-            path: '/people', component: () => import('./components/Person/Index'),
+            path: '/people/', component: () => import('./components/Person/Index'),
             name: 'person.index'
         },
         {
             path: '/people/create', component: () => import('./components/Person/Create'),
             name: 'person.create'
+        },
+        {
+            path: '/people/:id/edit', component: () => import('./components/Person/Edit'), // переменные записываются через :
+            name: 'person.edit'
+        },
+        {
+            path: '/people/:id', component: () => import('./components/Person/Show'), // переменные записываются через :
+            name: 'person.show'
         },
     ]
 });
