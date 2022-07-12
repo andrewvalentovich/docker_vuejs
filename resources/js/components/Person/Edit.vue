@@ -14,15 +14,13 @@
                 <label for="jobInput">Job</label>
             </div>
             <div class="mb-3">
-                <button type="submit" @click.prevent="update" class="btn btn-primary mb-3">Update information</button>
-                <button type="submit" @click.prevent="close" class="btn btn-danger mb-3">Close</button>
+                <input type="button" :disabled="isDisabled" @click.prevent="update" class="btn btn-primary mb-3" value="Update information">
+                <input type="button" @click.prevent="close" class="btn btn-danger mb-3" value="Close">
             </div>
         </form>
     </div>
 </template>
 <script>
-    import router from "../../router";
-
     export default {
         name: 'Edit',
 
@@ -38,19 +36,25 @@
             this.getPerson();
         },
 
+        computed: {
+            isDisabled() {
+                return !this.name && !this.age && !this.job;
+            }
+        },
+
         methods: {
             getPerson() {
-                axios.get('/api/people/' + this.$route.params.id)
+                axios.get(`/api/people/${this.$route.params.id}`)
                 .then(result => {
-                    this.name = result.data.name;
-                    this.age = result.data.age;
-                    this.job = result.data.job;
+                    this.name = result.data.data.name;
+                    this.age = result.data.data.age;
+                    this.job = result.data.data.job;
                 })
             },
 
             update() {
                 axios.patch(
-                    '/api/people/' + this.$route.params.id,
+                    `/api/people/${this.$route.params.id}`,
                     {
                         name: this.name,
                         age: this.age,
@@ -58,11 +62,11 @@
                     }
                 )
                 .then(result => {
-                    router.push({ name: 'person.show', params: { id: this.$route.params.id }});
+                    this.$router.push({ name: 'person.show', params: { id: this.$route.params.id }});
                 })
             },
             close() {
-                router.go(-1);
+                this.$router.go(-1);
             }
         }
     }

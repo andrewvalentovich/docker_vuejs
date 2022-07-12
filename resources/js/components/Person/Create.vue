@@ -21,8 +21,6 @@
     </div>
 </template>
 <script>
-    import router from "../../router";
-
     export default {
         name: "Create",
 
@@ -38,13 +36,13 @@
             create() {
                 axios.post('/api/people/', {name: this.name, age: this.age, job: this.job})
                 .then(result => {
-                    router.push({ name: 'person.index' });  // нестрелочная функция создаёт собственный контекст
+                    this.$router.push({ name: 'person.index' });  // нестрелочная функция создаёт собственный контекст
                                                             // за счёт чего мы не можем обратиться к data()
                                                             // (this.name, this.age и т.д.)
                 });
             },
             close() {
-                router.push({ name: 'person.index' });
+                this.$router.push({ name: 'person.index' });
             }
         }
     }

@@ -1,5 +1,5 @@
 <template>
-    <table class="table table-hover">
+    <table class="table">
         <thead>
             <tr>
                 <th scope="col">#</th>
@@ -12,9 +12,11 @@
         </thead>
         <tbody>
             <template>
-                <tr v-for="person in people" @click="linkToShow(person.id)">
+                <tr v-for="person in people">
                     <td scope="row">{{ person.id }}</td>
-                    <td>{{ person.name }}</td>
+                    <td>
+                        <router-link :to="{name: 'person.show', params: { id: person.id }}">{{ person.name }}</router-link>
+                    </td>
                     <td>{{ person.age }}</td>
                     <td>{{ person.job }}</td>
                     <td>
@@ -25,7 +27,7 @@
                         </router-link>
                     </td>
                     <td>
-                        <div @click.prevent="deletePerson(person.id)" class="btn btn-outline-danger">Delete</div>
+                        <button @click.prevent="deletePerson(person.id)" class="btn btn-outline-danger">Delete</button>
                     </td>
                 </tr>
             </template>
@@ -33,8 +35,6 @@
     </table>
 </template>
 <script>
-    import router from "../../router";
-
     export default {
         name: "Index.vue",
 
@@ -52,17 +52,17 @@
             indexPeople() {
                 axios.get('/api/people/')
                 .then(result => {
-                    this.people = result.data;
+                    this.people = result.data.data;
                 })
             },
             deletePerson(id) {
-                axios.delete('/api/people/' + id)
+                axios.delete(`/api/people/${id}`)
                 .then(result => {
                     this.indexPeople();
                 })
             },
             linkToShow(id) {
-                router.push({ name: 'person.show', params: { id: id }})
+                this.$router.push({ name: 'person.show', params: { id: id }})
             }
         }
     }

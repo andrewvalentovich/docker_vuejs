@@ -5573,8 +5573,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../router */ "./resources/js/router.js");
-
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'Edit',
   data: function data() {
@@ -5587,25 +5585,30 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     this.getPerson();
   },
+  computed: {
+    isDisabled: function isDisabled() {
+      return !this.name && !this.age && !this.job;
+    }
+  },
   methods: {
     getPerson: function getPerson() {
       var _this = this;
 
-      axios.get('/api/people/' + this.$route.params.id).then(function (result) {
-        _this.name = result.data.name;
-        _this.age = result.data.age;
-        _this.job = result.data.job;
+      axios.get("/api/people/".concat(this.$route.params.id)).then(function (result) {
+        _this.name = result.data.data.name;
+        _this.age = result.data.data.age;
+        _this.job = result.data.data.job;
       });
     },
     update: function update() {
       var _this2 = this;
 
-      axios.patch('/api/people/' + this.$route.params.id, {
+      axios.patch("/api/people/".concat(this.$route.params.id), {
         name: this.name,
         age: this.age,
         job: this.job
       }).then(function (result) {
-        _router__WEBPACK_IMPORTED_MODULE_0__["default"].push({
+        _this2.$router.push({
           name: 'person.show',
           params: {
             id: _this2.$route.params.id
@@ -5614,7 +5617,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     close: function close() {
-      _router__WEBPACK_IMPORTED_MODULE_0__["default"].go(-1);
+      this.$router.go(-1);
     }
   }
 });
@@ -5632,8 +5635,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../router */ "./resources/js/router.js");
-
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'Show',
   data: function data() {
@@ -5648,13 +5649,16 @@ __webpack_require__.r(__webpack_exports__);
     getPerson: function getPerson() {
       var _this = this;
 
-      axios.get('/api/people/' + this.$route.params.id).then(function (result) {
-        _this.person = result.data;
+      axios.get("/api/people/".concat(this.$route.params.id)).then(function (result) {
+        console.log(result.data);
+        _this.person = result.data.data;
       });
     },
     deletePerson: function deletePerson() {
-      axios["delete"]('/api/people/' + this.$route.params.id).then(function (result) {
-        _router__WEBPACK_IMPORTED_MODULE_0__["default"].push({
+      var _this2 = this;
+
+      axios["delete"]("/api/people/".concat(this.$route.params.id)).then(function (result) {
+        _this2.$router.push({
           name: 'person.index'
         });
       });
@@ -6109,10 +6113,12 @@ var render = function render() {
     }
   }, [_vm._v("Job")])]), _vm._v(" "), _c("div", {
     staticClass: "mb-3"
-  }, [_c("button", {
+  }, [_c("input", {
     staticClass: "btn btn-primary mb-3",
     attrs: {
-      type: "submit"
+      type: "button",
+      disabled: _vm.isDisabled,
+      value: "Update information"
     },
     on: {
       click: function click($event) {
@@ -6120,10 +6126,11 @@ var render = function render() {
         return _vm.update.apply(null, arguments);
       }
     }
-  }, [_vm._v("Update information")]), _vm._v(" "), _c("button", {
+  }), _vm._v(" "), _c("input", {
     staticClass: "btn btn-danger mb-3",
     attrs: {
-      type: "submit"
+      type: "button",
+      value: "Close"
     },
     on: {
       click: function click($event) {
@@ -6131,7 +6138,7 @@ var render = function render() {
         return _vm.close.apply(null, arguments);
       }
     }
-  }, [_vm._v("Close")])])])]);
+  })])])]);
 };
 
 var staticRenderFns = [];

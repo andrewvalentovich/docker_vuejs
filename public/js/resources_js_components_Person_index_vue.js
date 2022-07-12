@@ -11,8 +11,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../router */ "./resources/js/router.js");
-
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Index.vue",
   data: function data() {
@@ -28,18 +26,18 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       axios.get('/api/people/').then(function (result) {
-        _this.people = result.data;
+        _this.people = result.data.data;
       });
     },
     deletePerson: function deletePerson(id) {
       var _this2 = this;
 
-      axios["delete"]('/api/people/' + id).then(function (result) {
+      axios["delete"]("/api/people/".concat(id)).then(function (result) {
         _this2.indexPeople();
       });
     },
     linkToShow: function linkToShow(id) {
-      _router__WEBPACK_IMPORTED_MODULE_0__["default"].push({
+      this.$router.push({
         name: 'person.show',
         params: {
           id: id
@@ -67,19 +65,22 @@ var render = function render() {
       _c = _vm._self._c;
 
   return _c("table", {
-    staticClass: "table table-hover"
+    staticClass: "table"
   }, [_vm._m(0), _vm._v(" "), _c("tbody", [_vm._l(_vm.people, function (person) {
-    return _c("tr", {
-      on: {
-        click: function click($event) {
-          return _vm.linkToShow(person.id);
-        }
-      }
-    }, [_c("td", {
+    return _c("tr", [_c("td", {
       attrs: {
         scope: "row"
       }
-    }, [_vm._v(_vm._s(person.id))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(person.name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(person.age))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(person.job))]), _vm._v(" "), _c("td", [_c("router-link", {
+    }, [_vm._v(_vm._s(person.id))]), _vm._v(" "), _c("td", [_c("router-link", {
+      attrs: {
+        to: {
+          name: "person.show",
+          params: {
+            id: person.id
+          }
+        }
+      }
+    }, [_vm._v(_vm._s(person.name))])], 1), _vm._v(" "), _c("td", [_vm._v(_vm._s(person.age))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(person.job))]), _vm._v(" "), _c("td", [_c("router-link", {
       staticClass: "text-reset text-decoration-none text-light",
       attrs: {
         to: {
@@ -91,7 +92,7 @@ var render = function render() {
       }
     }, [_c("div", {
       staticClass: "btn btn-primary"
-    }, [_vm._v("\n                            Edit\n                        ")])])], 1), _vm._v(" "), _c("td", [_c("div", {
+    }, [_vm._v("\n                            Edit\n                        ")])])], 1), _vm._v(" "), _c("td", [_c("button", {
       staticClass: "btn btn-outline-danger",
       on: {
         click: function click($event) {

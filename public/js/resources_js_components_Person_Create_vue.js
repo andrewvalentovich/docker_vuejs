@@ -11,8 +11,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../router */ "./resources/js/router.js");
-
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Create",
   data: function data() {
@@ -24,20 +22,23 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     create: function create() {
+      var _this = this;
+
       axios.post('/api/people/', {
         name: this.name,
         age: this.age,
         job: this.job
       }).then(function (result) {
-        _router__WEBPACK_IMPORTED_MODULE_0__["default"].push({
+        _this.$router.push({
           name: 'person.index'
         }); // нестрелочная функция создаёт собственный контекст
         // за счёт чего мы не можем обратиться к data()
         // (this.name, this.age и т.д.)
+
       });
     },
     close: function close() {
-      _router__WEBPACK_IMPORTED_MODULE_0__["default"].push({
+      this.$router.push({
         name: 'person.index'
       });
     }
