@@ -1,19 +1,19 @@
 <template>
-    <div class="mt-3" v-if="this.person !== null">
+    <div class="mt-3" v-if="person !== null">
         <div>
-            Name: {{ this.person.name }}
+            Name: {{ person.name }}
         </div>
         <div>
-            Age: {{ this.person.age }}
+            Age: {{ person.age }}
         </div>
         <div>
-            Job: {{ this.person.job }}
+            Job: {{ person.job }}
         </div>
         <div>
-            <router-link class="text-decoration-none" :to="{name: 'person.edit', params: { id: this.person.id }}">
+            <router-link class="text-decoration-none" :to="{name: 'person.edit', params: { id: person.id }}">
                 Edit
             </router-link>
-            <a @click.prevent="deletePerson" class="text-danger text-decoration-none" href="#">Delete</a>
+            <a @click.prevent="$store.dispatch('deletePersonWithRedirect', person.id)" class="text-danger text-decoration-none" href="#">Delete</a>
         </div>
     </div>
 </template>
@@ -22,30 +22,15 @@
     export default {
         name: 'Show',
 
-        data() {
-            return {
-                person: null
-            }
-        },
-
         mounted() {
-            this.getPerson();
+            this.$store.dispatch('getPerson', this.$route.params.id)
         },
 
-        methods: {
-            getPerson() {
-                axios.get(`/api/people/${this.$route.params.id}`)
-                .then(result => {
-                    this.person = result.data.data;
-                })
-            },
-            deletePerson() {
-                axios.delete(`/api/people/${this.$route.params.id}`)
-                .then(result => {
-                    this.$router.push({ name: 'person.index' });
-                })
+        computed: {
+            person() {
+                return this.$store.getters.person;
             }
-        }
+        },
     }
 </script>
 

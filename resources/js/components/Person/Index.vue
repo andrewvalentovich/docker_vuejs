@@ -26,7 +26,7 @@
                     </router-link>
                 </td>
                 <td>
-                    <button @click.prevent="deletePerson(person.id)" class="btn btn-outline-danger">Delete</button>
+                    <button @click.prevent="$store.dispatch('deletePerson', person.id)" class="btn btn-outline-danger">Delete</button>
                 </td>
             </tr>
         </tbody>
@@ -36,31 +36,13 @@
     export default {
         name: "Index.vue",
 
-        data() {
-            return{
-                people: null,
-            }
-        },
-
         mounted() {
-            this.indexPeople();
+            this.$store.dispatch('getPeople');
         },
 
-        methods: {
-            indexPeople() {
-                axios.get('/api/people/')
-                .then(result => {
-                    this.people = result.data.data;
-                })
-            },
-            deletePerson(id) {
-                axios.delete(`/api/people/${id}`)
-                .then(result => {
-                    this.indexPeople();
-                })
-            },
-            linkToShow(id) {
-                this.$router.push({ name: 'person.show', params: { id: id }})
+        computed: {
+            people() {
+                return this.$store.getters.people;
             }
         }
     }

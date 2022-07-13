@@ -14,8 +14,8 @@
                 <label for="jobInput">Job</label>
             </div>
             <div class="mb-3">
-                <button type="submit" @click.prevent="create" class="btn btn-primary mb-3">Add person</button>
-                <button type="submit" @click.prevent="close" class="btn btn-danger mb-3">Close</button>
+                <button type="submit" @click.prevent="$store.dispatch('create', {name, age, job})" class="btn btn-primary mb-3">Add person</button>
+                <button type="submit" @click.prevent="$store.dispatch('back')" class="btn btn-danger mb-3">Close</button>
             </div>
         </form>
     </div>
@@ -32,17 +32,9 @@
             }
         },
 
-        methods: {
-            create() {
-                axios.post('/api/people/', {name: this.name, age: this.age, job: this.job})
-                .then(result => {
-                    this.$router.push({ name: 'person.index' });  // нестрелочная функция создаёт собственный контекст
-                                                            // за счёт чего мы не можем обратиться к data()
-                                                            // (this.name, this.age и т.д.)
-                });
-            },
-            close() {
-                this.$router.push({ name: 'person.index' });
+        computed: {
+            isDisabled() {
+                return !this.person.name && !this.person.age && !this.person.job;
             }
         }
     }

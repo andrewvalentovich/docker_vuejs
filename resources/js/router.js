@@ -1,38 +1,37 @@
-import { createRouter, createWebHistory } from "vue-router";
-import ArticleComponent from "./components/ArticleComponent";
-import Index from "./components/Person/Index";
-import Create from "./components/Person/Create";
-import Edit from "./components/Person/Edit";
-import Show from "./components/Person/Show";
+import Vue from 'vue';
+import VueRouter from "vue-router";
+import ArticleComponent from "./components/Routes/ArticleComponent";
+import TagComponent from "./components/Routes/TagComponent";
 
-const routes = [
-    {
-        path: '/',
-        component: ArticleComponent
-    },
-    {
-        path: '/people/',
-        component: Index,
-        name: 'person.index'
-    },
-    {
-        path: '/people/create',
-        component: Create,
-        name: 'person.create'
-    },
-    {
-        path: '/people/:id/edit',
-        component: Edit, // переменные записываются через :
-        name: 'person.edit'
-    },
-    {
-        path: '/people/:id',
-        component: Show, // переменные записываются через :
-        name: 'person.show'
-    },
-];
+Vue.use(VueRouter);
 
-export default createRouter({
-    routes: routes,
-    history: createWebHistory(),
+export default new VueRouter({
+    mode: 'history',
+
+    routes: [
+        {
+            path: '/article',
+            component: ArticleComponent
+        },
+        {
+            path: '/tag',
+            component: TagComponent
+        },
+        {
+            path: '/people/', component: () => import('./components/Person/Index'),
+            name: 'person.index'
+        },
+        {
+            path: '/people/create', component: () => import('./components/Person/Create'),
+            name: 'person.create'
+        },
+        {
+            path: '/people/:id/edit', component: () => import('./components/Person/Edit'), // переменные записываются через :
+            name: 'person.edit'
+        },
+        {
+            path: '/people/:id', component: () => import('./components/Person/Show'), // переменные записываются через :
+            name: 'person.show'
+        },
+    ]
 });

@@ -1,27 +1,20 @@
-// import Vue from 'vue';
-// import ArticleComponent from "./components/ArticleComponent";
+import Vue from 'vue';
+import ArticleComponent from "./components/ArticleComponent";
+import Index from './components/Index.vue'
+import router from "./router";
+import store from "./store";
 
 require('./bootstrap');
 
 
+const createApp = new Vue({
+    el: '#app',
 
-import { createApp } from 'vue';
-import Index from './components/Index.vue'
-import router from "./router";
+    components: {
+        ArticleComponent,
+        Index
+    },
 
-const app = createApp(Index);
-app.use(router);
-app.mount("#app");
-
-
-
-// const createApp = new Vue({
-//     el: '#app',
-//
-//     components: {
-//         ArticleComponent,
-//         Index
-//     },
-//
-//     router
-// });
+    router,
+    store
+});
