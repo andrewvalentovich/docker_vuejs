@@ -11,26 +11,24 @@
             </tr>
         </thead>
         <tbody>
-            <template>
-                <tr v-for="person in people">
-                    <td scope="row">{{ person.id }}</td>
-                    <td>
-                        <router-link :to="{name: 'person.show', params: { id: person.id }}">{{ person.name }}</router-link>
-                    </td>
-                    <td>{{ person.age }}</td>
-                    <td>{{ person.job }}</td>
-                    <td>
-                        <router-link class="text-reset text-decoration-none text-light" :to="{name: 'person.edit', params: { id: person.id }}">
-                            <div class="btn btn-primary">
-                                Edit
-                            </div>
-                        </router-link>
-                    </td>
-                    <td>
-                        <button @click.prevent="deletePerson(person.id)" class="btn btn-outline-danger">Delete</button>
-                    </td>
-                </tr>
-            </template>
+            <tr v-for="person in people">
+                <td scope="row">{{ person.id }}</td>
+                <td>
+                    <router-link :to="{name: 'person.show', params: { id: person.id }}">{{ person.name }}</router-link>
+                </td>
+                <td>{{ person.age }}</td>
+                <td>{{ person.job }}</td>
+                <td>
+                    <router-link class="text-reset text-decoration-none text-light" :to="{name: 'person.edit', params: { id: person.id }}">
+                        <div class="btn btn-primary">
+                            Edit
+                        </div>
+                    </router-link>
+                </td>
+                <td>
+                    <button @click.prevent="deletePerson(person.id)" class="btn btn-outline-danger">Delete</button>
+                </td>
+            </tr>
         </tbody>
     </table>
 </template>
